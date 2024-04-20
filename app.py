@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # App
 app = Flask(__name__)
@@ -8,6 +9,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://joaquin:123456789@localhost:5432/base_prueba'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Migration
+migrate = Migrate(app,db)
 
     # Database models
 class Role(db.Model):
