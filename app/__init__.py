@@ -14,5 +14,4 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
     
     # Iniciar app
-    config[config_name].init_app(app)
     return app

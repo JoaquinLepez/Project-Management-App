@@ -6,7 +6,6 @@ class Team(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # Relaciones con otras tablas
-
     # Project 1:1
     project = db.relationship("Project", uselist=False, back_populates="team")
 
