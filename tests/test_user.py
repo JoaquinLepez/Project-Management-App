@@ -38,14 +38,14 @@ class UserTestCase(unittest.TestCase):
         # db.session.add(user)
         # db.session.commit()
 
-        self.assertTrue(user.email, self.EMAIL_PRUEBA)
-        self.assertTrue(user.username, self.USERNAME_PRUEBA)
-        self.assertTrue(user.password, self.PASSWORD_PRUEBA)
+        self.assertEqual(user.email, self.EMAIL_PRUEBA)
+        self.assertEqual(user.username, self.USERNAME_PRUEBA)
+        self.assertEqual(user.password, self.PASSWORD_PRUEBA)
         self.assertIsNotNone(user.data)
-        self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
-        self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
-        self.assertTrue(user.data.lastname, self.LASTNAME_PRUEBA)
-        self.assertTrue(user.data.phone, self.PHONE_PRUEBA)
+        self.assertEqual(user.data.address, self.ADDRESS_PRUEBA)
+        self.assertEqual(user.data.firstname, self.FIRSTNAME_PRUEBA)
+        self.assertEqual(user.data.lastname, self.LASTNAME_PRUEBA)
+        self.assertEqual(user.data.phone, self.PHONE_PRUEBA)
 
     def test_user_save(self):
         user = self.__get_user()
@@ -53,15 +53,15 @@ class UserTestCase(unittest.TestCase):
         user_service.save(user)
 
         self.assertGreaterEqual(user.id, 1)
-        self.assertTrue(user.email, self.EMAIL_PRUEBA)
-        self.assertTrue(user.username, self.USERNAME_PRUEBA)
+        self.assertEqual(user.email, self.EMAIL_PRUEBA)
+        self.assertEqual(user.username, self.USERNAME_PRUEBA)
         self.assertIsNotNone(user.password)
         self.assertTrue(user_service.check_auth(user.username, self.PASSWORD_PRUEBA))
         self.assertIsNotNone(user.data)
-        self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
-        self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
-        self.assertTrue(user.data.lastname, self.LASTNAME_PRUEBA)
-        self.assertTrue(user.data.phone, self.PHONE_PRUEBA)
+        self.assertEqual(user.data.address, self.ADDRESS_PRUEBA)
+        self.assertEqual(user.data.firstname, self.FIRSTNAME_PRUEBA)
+        self.assertEqual(user.data.lastname, self.LASTNAME_PRUEBA)
+        self.assertEqual(user.data.phone, self.PHONE_PRUEBA)
     
     def test_user_delete(self):
         user = self.__get_user()

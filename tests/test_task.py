@@ -1,6 +1,9 @@
 import unittest
 from app import create_app, db
 from app.models import Task
+from app.services import TaskService
+
+task_service = TaskService()
 
 class TaskTasteCase(unittest.TestCase):
 
@@ -15,13 +18,6 @@ class TaskTasteCase(unittest.TestCase):
         self.DIFFICULTY_PRUEBA = "elevada"
         self.STATE_PRUEBA = "en proceso"
 
-        # Project
-        self.PROJECT_NAME_PRUEBA = "mi proyecto"
-        self.PROJECT_DESCRIPTION_PRUEBA = "esta es la descripcion de mi proyecto"
-        self.PROJECT_START_DATE_PRUEBA = "1/1/2024"
-        self.PROJECT_DEADLINE_PRUEBA = "28/2/2024"
-        self.PROJECT_STATE_PRUEBA = "en proceso"
-
         self.app = create_app("testing")
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -32,17 +28,38 @@ class TaskTasteCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_project(self):
+    def test_task(self):
         
         task = self.__get_task()
 
-        self.assertTrue(task.name, self.NAME_PRUEBA)
-        self.assertTrue(task.description, self.DESCRIPTION_PRUEBA)
-        self.assertTrue(task.start_date, self.START_DATE_PRUEBA)
-        self.assertTrue(task.deadline, self.DEADLINE_PRUEBA)
-        self.assertTrue(task.priority, self.PRIORITY_PRUEBA)
-        self.assertTrue(task.difficulty, self.DIFFICULTY_PRUEBA)
-        self.assertTrue(task.state, self.STATE_PRUEBA)
+        self.assertEqual(task.name, self.NAME_PRUEBA)
+        self.assertEqual(task.description, self.DESCRIPTION_PRUEBA)
+        self.assertEqual(task.start_date, self.START_DATE_PRUEBA)
+        self.assertEqual(task.deadline, self.DEADLINE_PRUEBA)
+        self.assertEqual(task.priority, self.PRIORITY_PRUEBA)
+        self.assertEqual(task.difficulty, self.DIFFICULTY_PRUEBA)
+        self.assertEqual(task.state, self.STATE_PRUEBA)
+    
+    def test_task_save(self):
+        task = self.__get_task()
+
+        task_service.save(task)
+
+        self.assertGreaterEqual(task.id,1)
+        self.assertEqual(task.name, self.NAME_PRUEBA)
+        self.assertEqual(task.description, self.DESCRIPTION_PRUEBA)
+        self.assertEqual(task.start_date, self.START_DATE_PRUEBA)
+        self.assertEqual(task.deadline, self.DEADLINE_PRUEBA)
+        self.assertEqual(task.priority, self.PRIORITY_PRUEBA)
+        self.assertEqual(task.difficulty, self.DIFFICULTY_PRUEBA)
+        self.assertEqual(task.state, self.STATE_PRUEBA)
+
+    def test_task_delete(self):
+        task = self.__get_task()
+        task_service.save(task)
+
+        task_service.delete(task)
+        self.assertIsNone(task_service.find(task.id))
 
     def __get_task(self):
 
@@ -57,6 +74,29 @@ class TaskTasteCase(unittest.TestCase):
 
         return task
     
+    def test_task_all(self):
+        task = self.__get_task()
+        task_service.save(task)
+
+        tasks = task_service.all()
+        self.assertGreaterEqual(len(tasks), 1)
+
+    def test_task_find(self):
+        task = self.__get_task()
+        task_service.save(task)
+
+        task_find = task_service.find(1)
+        self.assertIsNotNone(task_find)
+        self.assertEqual(task_find.id, task.id)
+    
+    def test_task_find_by_name(self):
+        task = self.__get_task()
+        task_service.save(task)
+
+        task_find = task_service.find_by_name(task.name)
+        self.assertIsNotNone(task_find)
+        self.assertEqual(task_find.id, task.id)
+
 
 if __name__ == '__main__':
     unittest.main()
