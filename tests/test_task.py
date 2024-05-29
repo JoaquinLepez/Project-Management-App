@@ -60,19 +60,6 @@ class TaskTasteCase(unittest.TestCase):
 
         task_service.delete(task)
         self.assertIsNone(task_service.find(task.id))
-
-    def __get_task(self):
-
-        task = Task()
-        task.name = self.NAME_PRUEBA
-        task.description = self.DESCRIPTION_PRUEBA
-        task.start_date = self.START_DATE_PRUEBA
-        task.deadline = self.DEADLINE_PRUEBA
-        task.priority = self.PRIORITY_PRUEBA
-        task.difficulty = self.DIFFICULTY_PRUEBA
-        task.state = self.STATE_PRUEBA
-
-        return task
     
     def test_task_all(self):
         task = self.__get_task()
@@ -97,6 +84,18 @@ class TaskTasteCase(unittest.TestCase):
         self.assertIsNotNone(task_find)
         self.assertEqual(task_find.id, task.id)
 
+    def __get_task(self):
+
+        task = Task()
+        task.name = self.NAME_PRUEBA
+        task.description = self.DESCRIPTION_PRUEBA
+        task.start_date = self.START_DATE_PRUEBA
+        task.deadline = self.DEADLINE_PRUEBA
+        task.priority = self.PRIORITY_PRUEBA
+        task.difficulty = self.DIFFICULTY_PRUEBA
+        task.state = self.STATE_PRUEBA
+
+        return task
 
 if __name__ == '__main__':
     unittest.main()
