@@ -3,7 +3,10 @@ from app.models.relations import user_team
 
 class Team(db.Model):
     __tablename__ = "teams"
+
+    # Atributos propios
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name: str = db.Column(db.String(80), nullable=False)
 
     # Relaciones con otras tablas
     # Project 1:1
