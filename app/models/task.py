@@ -24,4 +24,10 @@ class Task(db.Model):
     # Users N:M
     users = db.relationship("User", secondary = user_task, back_populates="tasks")
 
+    def add_user(self, user):
+        if user not in self.users:
+            self.users.append(user)
     
+    def remove_user(self, user):
+        if user in self.users:
+            self.users.remove(user)
