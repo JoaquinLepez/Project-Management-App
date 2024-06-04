@@ -23,8 +23,22 @@ class User(db.Model):
 
     def __init__(self, user_data: UserData = None):
         self.data = user_data
+    
+    def add_task(self, task):
+        if task not in self.tasks:
+            self.tasks.append(task)
+    
+    def remove_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task)
 
-
+    def add_team(self, team):
+        if team not in self.teams:
+            self.teams.append(team)
+    
+    def remove_team(self, team):
+        if team in self.teams:
+            self.teams.remove(team)
 
 
 

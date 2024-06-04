@@ -15,3 +15,10 @@ class Team(db.Model):
     # Users N:M
     users = db.relationship("User", secondary = user_team, back_populates="teams")
 
+    def add_user(self, user):
+        if user not in self.users:
+            self.users.append(user)
+    
+    def remove_user(self, user):
+        if user in self.users:
+            self.users.remove(user)

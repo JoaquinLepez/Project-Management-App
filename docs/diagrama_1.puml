@@ -32,6 +32,7 @@ class Task {
 }
 
 class Team {
+    - name: str
 }
 
 class Project {
@@ -49,7 +50,7 @@ Model <|-- Task
 Model <|-- Team
 Model <|-- Project
 
-User "1" *--- "1" UserData : contiene
+User "1" *--- "1" UserData 
 User "m" ---- "n" Team
 User "m" ---- "n" Task
 Project "1" ---- "1" Team
